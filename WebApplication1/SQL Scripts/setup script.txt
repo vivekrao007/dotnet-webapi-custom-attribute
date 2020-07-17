@@ -1,0 +1,43 @@
+﻿create database assesment
+use assesment
+
+create table Technologies(
+TechId int IDENTITY(1,1) Primary key,
+TechName varchar(50) unique not null,
+CreatedBy varchar(20),
+CreatedDate datetime,
+UpdatedBy varchar(20),
+UpdatedDate datetime,
+DeletedBy varchar(20),
+DeletedDate datetime,
+is_deleted smallint default 0,
+)
+
+create table Roles(
+RoleId int IDENTITY(1,1) Primary key,
+RoleName varchar(20) unique not null
+)
+
+create table Users(
+UserId int IDENTITY(1,1) Primary key,
+UserName varchar(20) not null,
+PhoneNo varchar(10) unique,
+Email varchar(50) unique not null,
+Password varchar(20) not null,
+RoleId int foreign key references Roles(RoleId),
+CreatedBy varchar(20),
+CreatedDate datetime,
+UpdatedBy varchar(20),
+UpdatedDate datetime,
+DeletedBy varchar(20),
+DeletedDate datetime,
+is_deleted smallint default 0,
+)
+
+create table user_technology_mapping(
+userTechId int IDENTITY(1,1) unique,
+userId int foreign key references Users(UserId) not null,
+techId int foreign key references Technologies(TechId) not null
+)
+
+insert into dbo.Roles(RoleName) values ('admin')
